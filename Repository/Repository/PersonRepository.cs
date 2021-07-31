@@ -1,4 +1,5 @@
-﻿using PersonDirectory.Domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonDirectory.Domain.Models;
 using PersonDirectory.Domain.Repository;
 using PersonDirectory.Persistence.Data;
 using PersonDirectory.Persistence.Models;
@@ -50,7 +51,7 @@ namespace PersonDirectory.Persistence.Repository
 
         public PersonModel GetPerson(int id)
         {
-            var p = _db.People.SingleOrDefault(p => p.Id == id);
+            var p = _db.People.Include(p => p.RelationRelatedPeople).SingleOrDefault(p => p.Id == id);
             return new PersonModel { 
                 Id = p.Id,
                 Firstname = p.Firstname,
