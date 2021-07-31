@@ -1481,6 +1481,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "PersonDirectory.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/PersonDirectory.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PersonDirectory.Domain.dll": {}
+        }
       }
     }
   },
@@ -5693,11 +5703,17 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "PersonDirectory.Domain/1.0.0": {
+      "type": "project",
+      "path": "../ProductDirectory.Domain/PersonDirectory.Domain.csproj",
+      "msbuildProject": "../ProductDirectory.Domain/PersonDirectory.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.8"
+      "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.8",
+      "PersonDirectory.Domain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5707,9 +5723,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Nika\\source\\repos\\PersonDirectory\\Repository\\Repository.csproj",
-      "projectName": "Repository",
-      "projectPath": "C:\\Users\\Nika\\source\\repos\\PersonDirectory\\Repository\\Repository.csproj",
+      "projectUniqueName": "C:\\Users\\Nika\\source\\repos\\PersonDirectory\\Repository\\PersonDirectory.Persistence.csproj",
+      "projectName": "PersonDirectory.Persistence",
+      "projectPath": "C:\\Users\\Nika\\source\\repos\\PersonDirectory\\Repository\\PersonDirectory.Persistence.csproj",
       "packagesPath": "C:\\Users\\Nika\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Nika\\source\\repos\\PersonDirectory\\Repository\\obj\\",
       "projectStyle": "PackageReference",
@@ -5731,7 +5747,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Nika\\source\\repos\\PersonDirectory\\ProductDirectory.Domain\\PersonDirectory.Domain.csproj": {
+              "projectPath": "C:\\Users\\Nika\\source\\repos\\PersonDirectory\\ProductDirectory.Domain\\PersonDirectory.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

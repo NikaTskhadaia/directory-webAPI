@@ -2,11 +2,11 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Repository.Models;
+using PersonDirectory.Persistence.Models;
 
 #nullable disable
 
-namespace Repository.Data
+namespace PersonDirectory.Persistence.Data
 {
     public partial class PeopleDb : DbContext
     {
@@ -88,21 +88,19 @@ namespace Repository.Data
 
             modelBuilder.Entity<Relation>(entity =>
             {
-                entity.HasKey(e => new { e.PersonOne, e.PersonTwo });
+                entity.HasKey(e => new { e.PersonId, e.RelatedPersonId });
 
-                entity.HasOne(d => d.PersonOneNavigation)
-                    .WithMany(p => p.RelationPersonOneNavigations)
-                    .HasForeignKey(d => d.PersonOne)
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.RelationPeople)
+                    .HasForeignKey(d => d.PersonId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Relations_PeopleOne");
 
-                entity.HasOne(d => d.PersonTwoNavigation)
-                    .WithMany(p => p.RelationPersonTwoNavigations)
-                    .HasForeignKey(d => d.PersonTwo)
+                entity.HasOne(d => d.RelatedPerson)
+                    .WithMany(p => p.RelationRelatedPeople)
+                    .HasForeignKey(d => d.RelatedPersonId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Relations_RelationsTwo");
-
-                entity.Property(e => e.RelationId).HasConversion<byte>();
             });
 
             OnModelCreatingPartial(modelBuilder);

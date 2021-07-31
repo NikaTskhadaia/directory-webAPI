@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Repository.Models
+namespace PersonDirectory.Persistence.Models
 {
     public partial class Person
     {
         public Person()
         {
             PhoneNumbers = new HashSet<PhoneNumber>();
-            RelationPersonOneNavigations = new HashSet<Relation>();
-            RelationPersonTwoNavigations = new HashSet<Relation>();
+            RelationPeople = new HashSet<Relation>();
+            RelationRelatedPeople = new HashSet<Relation>();
         }
 
         public int Id { get; set; }
@@ -26,11 +26,11 @@ namespace Repository.Models
 
         public virtual City City { get; set; }
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
-        public virtual ICollection<Relation> RelationPersonOneNavigations { get; set; }
-        public virtual ICollection<Relation> RelationPersonTwoNavigations { get; set; }
+        public virtual ICollection<Relation> RelationPeople { get; set; }
+        public virtual ICollection<Relation> RelationRelatedPeople { get; set; }
     }
 
-    public enum Gender : byte
+    public enum Gender
     {
         Female = 1,
         Male = 2

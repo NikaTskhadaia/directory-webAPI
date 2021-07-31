@@ -1,0 +1,11 @@
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\bin\Debug\net5.0\PersonDirectory.Domain.deps.json
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\bin\Debug\net5.0\PersonDirectory.Domain.dll
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\bin\Debug\net5.0\ref\PersonDirectory.Domain.dll
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\bin\Debug\net5.0\PersonDirectory.Domain.pdb
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\obj\Debug\net5.0\PersonDirectory.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\obj\Debug\net5.0\PersonDirectory.Domain.AssemblyInfoInputs.cache
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\obj\Debug\net5.0\PersonDirectory.Domain.AssemblyInfo.cs
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\obj\Debug\net5.0\PersonDirectory.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\obj\Debug\net5.0\PersonDirectory.Domain.dll
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\obj\Debug\net5.0\ref\PersonDirectory.Domain.dll
+C:\Users\Nika\source\repos\PersonDirectory\ProductDirectory.Domain\obj\Debug\net5.0\PersonDirectory.Domain.pdb

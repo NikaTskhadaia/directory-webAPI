@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rNKbrMhXeZbSfMVfbEjrlPBA5Wa7bxsoNwYBzx/XeaygsUfSIGPyOLswyMTvzliBOH0AxKfejYtb+LmuUVm95g==",
+  "dgSpecHash": "yY+ygqP18wsmuiziZ4afzqXSpO8XNtXM3cu7Dqinf9FqXSHoPdWIZwIiTmNaTjDjWT0we/9epH2KpEh51x+0FA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nika\\source\\repos\\PersonDirectory\\Repository\\Repository.csproj",
+  "projectFilePath": "C:\\Users\\Nika\\source\\repos\\PersonDirectory\\Repository\\PersonDirectory.Persistence.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nika\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\Nika\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",

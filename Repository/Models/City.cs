@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Repository.Models
+namespace PersonDirectory.Persistence.Models
 {
     public partial class City
     {

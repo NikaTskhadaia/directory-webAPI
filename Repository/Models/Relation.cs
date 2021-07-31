@@ -4,19 +4,19 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Repository.Models
+namespace PersonDirectory.Persistence.Models
 {
     public partial class Relation
     {
-        public int PersonOne { get; set; }
-        public int PersonTwo { get; set; }
-        public Relations RelationId { get; set; }
+        public int PersonId { get; set; }
+        public int RelatedPersonId { get; set; }
+        public RelationType RelationId { get; set; }
 
-        public virtual Person PersonOneNavigation { get; set; }
-        public virtual Person PersonTwoNavigation { get; set; }
+        public virtual Person Person { get; set; }
+        public virtual Person RelatedPerson { get; set; }
     }
 
-    public enum Relations : byte
+    public enum RelationType : byte
     {
         Coleague = 1,
         Familiar = 2,

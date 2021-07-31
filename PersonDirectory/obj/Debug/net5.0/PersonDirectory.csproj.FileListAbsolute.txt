@@ -27,3 +27,5 @@ C:\Users\Nika\source\repos\PersonDirectory\PersonDirectory\obj\Debug\net5.0\Pers
 C:\Users\Nika\source\repos\PersonDirectory\PersonDirectory\obj\Debug\net5.0\ref\PersonDirectory.dll
 C:\Users\Nika\source\repos\PersonDirectory\PersonDirectory\obj\Debug\net5.0\PersonDirectory.pdb
 C:\Users\Nika\source\repos\PersonDirectory\PersonDirectory\obj\Debug\net5.0\PersonDirectory.genruntimeconfig.cache
+C:\Users\Nika\source\repos\PersonDirectory\PersonDirectory\bin\Debug\net5.0\PersonDirectory.Domain.dll
+C:\Users\Nika\source\repos\PersonDirectory\PersonDirectory\bin\Debug\net5.0\PersonDirectory.Domain.pdb
