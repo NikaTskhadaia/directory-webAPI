@@ -21,7 +21,7 @@ namespace PersonDirectory.Domain.Models
     }
 
 
-    public enum Gender
+    public enum Gender : byte
     {
         Female = 1,
         Male = 2

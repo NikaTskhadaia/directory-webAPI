@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PersonDirectory.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +9,21 @@ namespace PersonDirectory.Domain.Repository
 {
     public interface IPersonRepository
     {
-        public void AddPerson(Person person);
+        public void AddPerson(PersonModel person);
 
-        void AddRelatedPerson(Person person, Person relatedPerson);
+        void AddRelatedPerson(PersonModel person, PersonModel relatedPerson);
 
-         void ChangePerson(Person person);
+         void ChangePerson(PersonModel person);
 
-         IEnumerable<Person> GetPeople();
+         IEnumerable<PersonModel> GetPeople();
 
-         Person GetPerson(int id);
+        PersonModel GetPerson(int id);
 
-         int RelatedPersonCount(Person person, RelationType relation);
+         int RelatedPersonCount(PersonModel person, RelationType relation);
 
-         void RemovePerson(Person person);
+         void RemovePerson(PersonModel person);
 
-         void RemoveRelatedPerson(Person person, Person relatedPerson);
+         void RemoveRelatedPerson(PersonModel person, PersonModel relatedPerson);
 
          void UploadPesonImage();
     }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fioLffmm/egRbQDySdcQpv8SmJAQELZo8yDkIFQoClZ/zaRp5EzrLBoamC2O37qW4oa29WbqHCgeK5gM7U5Scw==",
+  "dgSpecHash": "f5ZM7MEJ3WOA+9oVf+tRzI8IwJ39Ue35Kb6xXx5P7pSAY4BJdRpAw9DBSlAtYzwjCYb6QMYOxb58mqUpuIeJTg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nika\\source\\repos\\PersonDirectory\\ProductDirectory.Domain\\PersonDirectory.Domain.csproj",
+  "projectFilePath": "C:\\Users\\nikat\\OneDrive\\Desktop\\DirectoryWebApi\\ProductDirectory.Domain\\PersonDirectory.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

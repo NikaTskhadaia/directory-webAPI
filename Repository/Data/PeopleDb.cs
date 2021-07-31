@@ -30,7 +30,7 @@ namespace PersonDirectory.Persistence.Data
 
             modelBuilder.Entity<City>(entity =>
             {
-                entity.Property(e => e.City1)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("City");
@@ -68,7 +68,7 @@ namespace PersonDirectory.Persistence.Data
 
             modelBuilder.Entity<PhoneNumber>(entity =>
             {
-                entity.Property(e => e.PhoneNumber1)
+                entity.Property(e => e.Number)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
@@ -77,7 +77,8 @@ namespace PersonDirectory.Persistence.Data
                 entity.Property(e => e.PhoneNumberType)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasConversion<string>();
 
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.PhoneNumbers)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PersonDirectory.Domain;
+using PersonDirectory.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,24 +13,21 @@ namespace PersonDirectory.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
-        private readonly ILogger<WeatherForecastController> _logger;
-        private IUnitOfWork _unitOfWork;
+        private readonly ILogger<PersonModel> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IUnitOfWork unitOfWork)
+        public WeatherForecastController(ILogger<PersonModel> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
-        public void Get()
+        public ObjectResult Get()
         {
-
+            var p = _unitOfWork.People.GetPerson(1);
+            return Ok(p);
         }
     }
 }

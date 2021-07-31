@@ -1,4 +1,5 @@
-﻿using PersonDirectory.Domain.Repository;
+﻿using PersonDirectory.Domain.Models;
+using PersonDirectory.Domain.Repository;
 using PersonDirectory.Persistence.Data;
 using PersonDirectory.Persistence.Models;
 using System;
@@ -17,37 +18,50 @@ namespace PersonDirectory.Persistence.Repository
         {
             _db = db;
         }
-        public void AddPerson(Person person)
+        public void AddPerson(PersonModel person)
         {
-            _db.People.Add(person);
+            Person p = new Person
+            {
+                Id = person.Id,
+                Firstname = person.Firstname
+            };
+            _db.People.Add(p);
         }
 
-        public void AddRelatedPerson(Person person, Person relatedPerson)
+        public void AddRelatedPerson(PersonModel person, PersonModel relatedPerson)
         {
             _db.Relations.Add(new Relation() { PersonId = person.Id, RelatedPersonId = relatedPerson.Id });
         }
 
-        public void ChangePerson(Person person)
+        public void ChangePerson(PersonModel person)
         {
             var p = _db.People.SingleOrDefault(p => p.Id == person.Id);
             if (p is not null)
             {
-                p = person;
+                p.Firstname = person.Firstname;
                 _db.People.Update(p);
             }
         }
 
-        public IEnumerable<Person> GetPeople()
+        public IEnumerable<PersonModel> GetPeople()
         {
             throw new NotImplementedException();
         }
 
-        public Person GetPerson(int id)
+        public PersonModel GetPerson(int id)
         {
-            return _db.People.SingleOrDefault(p => p.Id == id);
+            var p = _db.People.SingleOrDefault(p => p.Id == id);
+            return new PersonModel { 
+                Id = p.Id,
+                Firstname = p.Firstname,
+                Lastname = p.Lastname,
+                Gender = p.Gender,
+                DateOfBirth = p.DateOfBirth,
+                PersonalNumber = p.PersonalNumber
+            };
         }
 
-        public int RelatedPersonCount(Person person, byte relation)
+        public int RelatedPersonCount(PersonModel person, RelationType relation)
         {
             var p = _db.People.SingleOrDefault(p => p.Id == person.Id);
             if (p is not null)
@@ -57,16 +71,16 @@ namespace PersonDirectory.Persistence.Repository
             return 0;
         }
 
-        public void RemovePerson(Person person)
+        public void RemovePerson(PersonModel person)
         {
             var p = _db.People.SingleOrDefault(p => p.Id == person.Id);
             if (p is not null)
             {
-                _db.People.Remove(person);
+                _db.People.Remove(p);
             }
         }
 
-        public void RemoveRelatedPerson(Person person, Person relatedPerson)
+        public void RemoveRelatedPerson(PersonModel person, PersonModel relatedPerson)
         {
             var r = _db.Relations.SingleOrDefault(r => r.PersonId == person.Id && r.RelatedPersonId == relatedPerson.Id);
             if (r is not null)

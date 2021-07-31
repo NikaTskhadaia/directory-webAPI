@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using PersonDirectory.Domain;
 using PersonDirectory.Domain.Repository;
 using PersonDirectory.Persistence;
+using PersonDirectory.Persistence.Data;
 using PersonDirectory.Persistence.Repository;
 
 namespace PersonDirectory
@@ -23,13 +25,16 @@ namespace PersonDirectory
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddControllers();
+            services.AddDbContext<PeopleDb>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PersonDirectory", Version = "v1" });
             });
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
