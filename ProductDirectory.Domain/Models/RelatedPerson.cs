@@ -9,7 +9,7 @@ namespace PersonDirectory.Domain.Models
     public class RelatedPerson
     {
         public int PersonId { get; set; }
-        public PersonModel RelatedPersonId { get; set; }
+        public int RelatedPersonId { get; set; }
         public RelationType RelationId { get; set; }
     }
 

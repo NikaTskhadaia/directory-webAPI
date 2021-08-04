@@ -5,8 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using PersonDirectory.ActionFilters;
 using PersonDirectory.Domain;
-using PersonDirectory.Domain.Repository;
+using PersonDirectory.Domain.Interfaces;
 using PersonDirectory.Persistence;
 using PersonDirectory.Persistence.Data;
 using PersonDirectory.Persistence.Repository;
@@ -26,9 +27,9 @@ namespace PersonDirectory
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<PeopleDb>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<PeopleDb>(options => options.UseSqlServer(
+                    Configuration.GetConnectionString("Desktop")));
+            services.AddScoped<ValidationFilter>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PersonDirectory", Version = "v1" });
@@ -52,6 +53,8 @@ namespace PersonDirectory
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

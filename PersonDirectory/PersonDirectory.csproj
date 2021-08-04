@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Repository\PersonDirectory.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
 </Project>

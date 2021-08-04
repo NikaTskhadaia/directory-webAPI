@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PersonDirectory.Domain.Interfaces;
 using PersonDirectory.Domain.Models;
-using PersonDirectory.Domain.Repository;
 using PersonDirectory.Persistence.Data;
 using PersonDirectory.Persistence.Models;
 using System;
@@ -19,19 +19,47 @@ namespace PersonDirectory.Persistence.Repository
         {
             _db = db;
         }
+
+        public PersonModel GetPerson(int personId)
+        {
+            var p = _db.People.Include(p => p.PhoneNumbers).Include(p => p.RelationPeople).SingleOrDefault(p => p.Id == personId);
+
+            PersonModel pModel = new PersonModel
+            {
+                Id = p.Id,
+                Firstname = p.Firstname,
+                Lastname = p.Lastname,
+                Gender = p.Gender,
+                DateOfBirth = p.DateOfBirth,
+                PersonalNumber = p.PersonalNumber,
+                RelatedPeople = new List<RelatedPerson>(),
+                PhoneNumbers = new List<Domain.Models.PhoneNumber>()
+            };
+
+            foreach (var item in p.RelationPeople)
+            {
+                pModel.RelatedPeople.Add(new RelatedPerson { PersonId = item.PersonId, RelatedPersonId = item.RelatedPersonId, RelationId = item.RelationId });
+            }
+
+            foreach (var item in p.PhoneNumbers)
+            {
+                pModel.PhoneNumbers.Add(new Domain.Models.PhoneNumber { Id = item.Id, Number = item.Number, NumberType = item.PhoneNumberType });
+            }
+
+            return pModel;
+        }
+
         public void AddPerson(PersonModel person)
         {
             Person p = new Person
             {
-                Id = person.Id,
-                Firstname = person.Firstname
+                Firstname = person.Firstname,
+                Lastname = person.Lastname,
+                Gender = person.Gender,
+                PersonalNumber = person.PersonalNumber,
+                DateOfBirth = person.DateOfBirth
             };
             _db.People.Add(p);
-        }
-
-        public void AddRelatedPerson(PersonModel person, PersonModel relatedPerson)
-        {
-            _db.Relations.Add(new Relation() { PersonId = person.Id, RelatedPersonId = relatedPerson.Id });
         }
 
         public void ChangePerson(PersonModel person)
@@ -40,31 +68,41 @@ namespace PersonDirectory.Persistence.Repository
             if (p is not null)
             {
                 p.Firstname = person.Firstname;
+                p.Lastname = person.Lastname;
+                p.Gender = person.Gender;
+                p.PersonalNumber = person.PersonalNumber;
+                p.DateOfBirth = person.DateOfBirth;
+                p.CityId = person.CityId;
                 _db.People.Update(p);
             }
         }
 
-        public IEnumerable<PersonModel> GetPeople()
+        public void RemovePerson(int personId)
         {
-            throw new NotImplementedException();
+            var p = _db.People.SingleOrDefault(p => p.Id == personId);
+            if (p is not null)
+            {
+                _db.People.Remove(p);
+            }
         }
 
-        public PersonModel GetPerson(int id)
+        public void AddRelatedPerson(int personId, int relatedPersonId, RelationType relationType)
         {
-            var p = _db.People.Include(p => p.RelationRelatedPeople).SingleOrDefault(p => p.Id == id);
-            return new PersonModel { 
-                Id = p.Id,
-                Firstname = p.Firstname,
-                Lastname = p.Lastname,
-                Gender = p.Gender,
-                DateOfBirth = p.DateOfBirth,
-                PersonalNumber = p.PersonalNumber
-            };
+            _db.Relations.Add(new Relation() { PersonId = personId, RelatedPersonId = relatedPersonId, RelationId = relationType });
         }
 
-        public int RelatedPersonCount(PersonModel person, RelationType relation)
+        public void RemoveRelatedPerson(int personId, int relatedPersonId)
         {
-            var p = _db.People.SingleOrDefault(p => p.Id == person.Id);
+            var r = _db.Relations.SingleOrDefault(r => r.PersonId == personId && r.RelatedPersonId == relatedPersonId);
+            if (r is not null)
+            {
+                _db.Relations.Remove(r);
+            }
+        }
+
+        public int RelatedPersonCount(int personId, RelationType relation)
+        {
+            var p = _db.People.Include(p => p.RelationPeople).SingleOrDefault(p => p.Id == personId);
             if (p is not null)
             {
                 return p.RelationPeople.Where(r => r.RelationId == relation).Count();
@@ -72,27 +110,52 @@ namespace PersonDirectory.Persistence.Repository
             return 0;
         }
 
-        public void RemovePerson(PersonModel person)
+        public void UploadPesonImage(string path, string personalNumber)
         {
-            var p = _db.People.SingleOrDefault(p => p.Id == person.Id);
-            if (p is not null)
-            {
-                _db.People.Remove(p);
-            }
+            var p = _db.People.SingleOrDefault(p => p.PersonalNumber == personalNumber);
+            p.Photo = path;
+            _db.People.Update(p);
         }
 
-        public void RemoveRelatedPerson(PersonModel person, PersonModel relatedPerson)
+        public IEnumerable<PersonModel> GetPeopleByIdOrName(string searchCriteria, int numberOfObjectsPerPage, int pageNumber)
         {
-            var r = _db.Relations.SingleOrDefault(r => r.PersonId == person.Id && r.RelatedPersonId == relatedPerson.Id);
-            if (r is not null)
+            IEnumerable<Person> people = _db.People.FromSqlRaw($"SP_GetPeople {searchCriteria},{numberOfObjectsPerPage},{pageNumber}").ToList();
+            List<PersonModel> result = new();
+            foreach (var item in people)
             {
-                _db.Relations.Remove(r);
+                result.Add(new PersonModel
+                {
+                    Firstname = item.Firstname,
+                    Lastname = item.Lastname,
+                    Gender = item.Gender,
+                    DateOfBirth = item.DateOfBirth,
+                    PersonalNumber = item.PersonalNumber,
+                    CityId = item.CityId,
+                    Photo = item.Photo
+                });
             }
+            return result;
         }
 
-        public void UploadPesonImage()
+        public IEnumerable<PersonModel> GetPeopleByAny(string firstname, string lastname, Gender gender, string personalNumber, DateTime dob, int? cityId, int numberOfObjectsPerPage, int pageNumber)
         {
-            throw new NotImplementedException();
+            var s = $"SP_Search_Person '{firstname}','{lastname}',{(byte)gender},'{personalNumber}','{dob}','{cityId}','{numberOfObjectsPerPage}','{pageNumber}'";
+            IEnumerable<Person> people = _db.People.FromSqlRaw(s).ToList();
+            List<PersonModel> result = new();
+            foreach (var item in people)
+            {
+                result.Add(new PersonModel
+                {
+                    Firstname = item.Firstname,
+                    Lastname = item.Lastname,
+                    Gender = item.Gender,
+                    DateOfBirth = item.DateOfBirth,
+                    PersonalNumber = item.PersonalNumber,
+                    CityId = item.CityId,
+                    Photo = item.Photo
+                });
+            }
+            return result;
         }
     }
 }

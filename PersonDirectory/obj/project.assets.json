@@ -5924,19 +5924,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nikat\\.nuget\\packages\\": {}
+    "C:\\Users\\Nika\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nikat\\OneDrive\\Desktop\\DirectoryWebApi\\PersonDirectory\\PersonDirectory.csproj",
+      "projectUniqueName": "C:\\Users\\Nika\\Desktop\\DirectoryWebApi\\PersonDirectory\\PersonDirectory.csproj",
       "projectName": "PersonDirectory",
-      "projectPath": "C:\\Users\\nikat\\OneDrive\\Desktop\\DirectoryWebApi\\PersonDirectory\\PersonDirectory.csproj",
-      "packagesPath": "C:\\Users\\nikat\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nikat\\OneDrive\\Desktop\\DirectoryWebApi\\PersonDirectory\\obj\\",
+      "projectPath": "C:\\Users\\Nika\\Desktop\\DirectoryWebApi\\PersonDirectory\\PersonDirectory.csproj",
+      "packagesPath": "C:\\Users\\Nika\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Nika\\Desktop\\DirectoryWebApi\\PersonDirectory\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\nikat\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Nika\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5950,11 +5955,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\nikat\\OneDrive\\Desktop\\DirectoryWebApi\\ProductDirectory.Domain\\PersonDirectory.Domain.csproj": {
-              "projectPath": "C:\\Users\\nikat\\OneDrive\\Desktop\\DirectoryWebApi\\ProductDirectory.Domain\\PersonDirectory.Domain.csproj"
+            "C:\\Users\\Nika\\Desktop\\DirectoryWebApi\\ProductDirectory.Domain\\PersonDirectory.Domain.csproj": {
+              "projectPath": "C:\\Users\\Nika\\Desktop\\DirectoryWebApi\\ProductDirectory.Domain\\PersonDirectory.Domain.csproj"
             },
-            "C:\\Users\\nikat\\OneDrive\\Desktop\\DirectoryWebApi\\Repository\\PersonDirectory.Persistence.csproj": {
-              "projectPath": "C:\\Users\\nikat\\OneDrive\\Desktop\\DirectoryWebApi\\Repository\\PersonDirectory.Persistence.csproj"
+            "C:\\Users\\Nika\\Desktop\\DirectoryWebApi\\Repository\\PersonDirectory.Persistence.csproj": {
+              "projectPath": "C:\\Users\\Nika\\Desktop\\DirectoryWebApi\\Repository\\PersonDirectory.Persistence.csproj"
             }
           }
         }
@@ -5992,7 +5997,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

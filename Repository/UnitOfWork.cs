@@ -1,5 +1,5 @@
 ﻿using PersonDirectory.Domain;
-using PersonDirectory.Domain.Repository;
+using PersonDirectory.Domain.Interfaces;
 using PersonDirectory.Persistence.Data;
 using PersonDirectory.Persistence.Models;
 using PersonDirectory.Persistence.Repository;
