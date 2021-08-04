@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace PersonDirectory.ActionFilters
 {
-    public class ValidationFilter : IActionFilter
+    public class ValidationFilterAttribute : IActionFilter
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnActionExecuting(ActionExecutingContext context)

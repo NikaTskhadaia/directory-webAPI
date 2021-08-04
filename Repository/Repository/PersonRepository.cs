@@ -73,7 +73,6 @@ namespace PersonDirectory.Persistence.Repository
                 p.PersonalNumber = person.PersonalNumber;
                 p.DateOfBirth = person.DateOfBirth;
                 p.CityId = person.CityId;
-                _db.People.Update(p);
             }
         }
 
@@ -114,7 +113,6 @@ namespace PersonDirectory.Persistence.Repository
         {
             var p = _db.People.SingleOrDefault(p => p.PersonalNumber == personalNumber);
             p.Photo = path;
-            _db.People.Update(p);
         }
 
         public IEnumerable<PersonModel> GetPeopleByIdOrName(string searchCriteria, int numberOfObjectsPerPage, int pageNumber)

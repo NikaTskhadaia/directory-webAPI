@@ -36,7 +36,7 @@ namespace PersonDirectory.Controllers
 
 
         [HttpPost("AddPerson")]
-        [ServiceFilter(typeof(ValidationFilter))]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public void AddPerson([FromBody] PersonModel person)
         {
             _unitOfWork.People.AddPerson(person);
@@ -44,7 +44,7 @@ namespace PersonDirectory.Controllers
         }
 
         [HttpPut("ChangePerson")]
-        [ServiceFilter(typeof(ValidationFilter))]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public void ChangePerson([FromBody] PersonModel person)
         {
             _unitOfWork.People.ChangePerson(person);
@@ -84,20 +84,13 @@ namespace PersonDirectory.Controllers
         [HttpPost("UploadFile")]
         public IActionResult UploadFile(IFormFile file, string personalNumber)
         {
-            try
-            {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", file.FileName);
-                FileStream stream = new (path, FileMode.Create);
-                file.CopyToAsync(stream);
-                string relativepath = Path.Combine(@"wwwroot\images", file.FileName);
-                _unitOfWork.People.UploadPesonImage(relativepath, personalNumber);
-                _unitOfWork.Save();
-                return Ok(new { length = file.Length, name = file.FileName });
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", file.FileName);
+            FileStream stream = new (path, FileMode.Create);
+            file.CopyToAsync(stream);
+            string relativepath = Path.Combine(@"wwwroot\images", file.FileName);
+            _unitOfWork.People.UploadPesonImage(relativepath, personalNumber);
+            _unitOfWork.Save();
+            return Ok(new { length = file.Length, name = file.FileName });
         }
 
         [HttpGet("GetPeopleByIdOrName")]
