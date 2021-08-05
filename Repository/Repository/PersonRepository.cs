@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PersonDirectory.Domain.Interfaces;
 using PersonDirectory.Domain.Models;
 using PersonDirectory.Persistence.Data;
@@ -6,6 +7,7 @@ using PersonDirectory.Persistence.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,69 +16,45 @@ namespace PersonDirectory.Persistence.Repository
     public class PersonRepository : IPersonRepository
     {
         private readonly PeopleDb _db;
+        private readonly IMapper _mapper;
 
-        public PersonRepository(PeopleDb db)
+        public PersonRepository(PeopleDb db, IMapper mapper)
         {
             _db = db;
+            _mapper = mapper;
         }
 
-        public PersonModel GetPerson(int personId)
+        public void Add(PersonModel person)
         {
-            var p = _db.People.Include(p => p.PhoneNumbers).Include(p => p.RelationPeople).SingleOrDefault(p => p.Id == personId);
-
-            PersonModel pModel = new PersonModel
-            {
-                Id = p.Id,
-                Firstname = p.Firstname,
-                Lastname = p.Lastname,
-                Gender = p.Gender,
-                DateOfBirth = p.DateOfBirth,
-                PersonalNumber = p.PersonalNumber,
-                RelatedPeople = new List<RelatedPerson>(),
-                PhoneNumbers = new List<Domain.Models.PhoneNumber>()
-            };
-
-            foreach (var item in p.RelationPeople)
-            {
-                pModel.RelatedPeople.Add(new RelatedPerson { PersonId = item.PersonId, RelatedPersonId = item.RelatedPersonId, RelationId = item.RelationId });
-            }
-
-            foreach (var item in p.PhoneNumbers)
-            {
-                pModel.PhoneNumbers.Add(new Domain.Models.PhoneNumber { Id = item.Id, Number = item.Number, NumberType = item.PhoneNumberType });
-            }
-
-            return pModel;
-        }
-
-        public void AddPerson(PersonModel person)
-        {
-            Person p = new Person
-            {
-                Firstname = person.Firstname,
-                Lastname = person.Lastname,
-                Gender = person.Gender,
-                PersonalNumber = person.PersonalNumber,
-                DateOfBirth = person.DateOfBirth
-            };
+            Person p = _mapper.Map<Person>(person);
             _db.People.Add(p);
         }
 
-        public void ChangePerson(PersonModel person)
+        public PersonModel Get(int personId)
         {
-            var p = _db.People.SingleOrDefault(p => p.Id == person.Id);
+            Person p = _db.People.Include(p => p.PhoneNumbers).Include(p => p.RelationPeople).SingleOrDefault(p => p.Id == personId);
+            //TODO - Correctly map collections -
+            PersonModel person = _mapper.Map<PersonModel>(p);
+            return person;
+        }
+
+        public void Update(PersonModel person)
+        {
+            var p = _db.People.AsNoTracking().SingleOrDefault(p => p.Id == person.Id);
             if (p is not null)
             {
-                p.Firstname = person.Firstname;
-                p.Lastname = person.Lastname;
-                p.Gender = person.Gender;
-                p.PersonalNumber = person.PersonalNumber;
-                p.DateOfBirth = person.DateOfBirth;
-                p.CityId = person.CityId;
+                p = _mapper.Map<Person>(person);
+                _db.People.Update(p);
             }
         }
 
-        public void RemovePerson(int personId)
+        public IEnumerable<PersonModel> GetAll(string searchCriteria, int numberOfObjectsPerPage, int pageNumber)
+        {
+            IEnumerable<Person> people = _db.People.FromSqlRaw($"SP_GetPeople {searchCriteria},{numberOfObjectsPerPage},{pageNumber}").ToList();
+            return _mapper.Map<List<PersonModel>>(people);
+        }
+
+        public void Remove(int personId)
         {
             var p = _db.People.SingleOrDefault(p => p.Id == personId);
             if (p is not null)
@@ -84,6 +62,8 @@ namespace PersonDirectory.Persistence.Repository
                 _db.People.Remove(p);
             }
         }
+
+        #region Initial Implementation
 
         public void AddRelatedPerson(int personId, int relatedPersonId, RelationType relationType)
         {
@@ -115,26 +95,6 @@ namespace PersonDirectory.Persistence.Repository
             p.Photo = path;
         }
 
-        public IEnumerable<PersonModel> GetPeopleByIdOrName(string searchCriteria, int numberOfObjectsPerPage, int pageNumber)
-        {
-            IEnumerable<Person> people = _db.People.FromSqlRaw($"SP_GetPeople {searchCriteria},{numberOfObjectsPerPage},{pageNumber}").ToList();
-            List<PersonModel> result = new();
-            foreach (var item in people)
-            {
-                result.Add(new PersonModel
-                {
-                    Firstname = item.Firstname,
-                    Lastname = item.Lastname,
-                    Gender = item.Gender,
-                    DateOfBirth = item.DateOfBirth,
-                    PersonalNumber = item.PersonalNumber,
-                    CityId = item.CityId,
-                    Photo = item.Photo
-                });
-            }
-            return result;
-        }
-
         public IEnumerable<PersonModel> GetPeopleByAny(string firstname, string lastname, Gender gender, string personalNumber, DateTime dob, int? cityId, int numberOfObjectsPerPage, int pageNumber)
         {
             var s = $"SP_Search_Person '{firstname}','{lastname}',{(byte)gender},'{personalNumber}','{dob}','{cityId}','{numberOfObjectsPerPage}','{pageNumber}'";
@@ -155,5 +115,6 @@ namespace PersonDirectory.Persistence.Repository
             }
             return result;
         }
+        #endregion
     }
 }

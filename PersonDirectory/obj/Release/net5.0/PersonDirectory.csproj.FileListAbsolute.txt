@@ -62,3 +62,5 @@ C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Release\net5.0\PersonD
 C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Release\net5.0\ref\PersonDirectory.dll
 C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Release\net5.0\PersonDirectory.pdb
 C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Release\net5.0\PersonDirectory.genruntimeconfig.cache
+C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Release\net5.0\PersonDirectory.Resources.Controllers.PersonController.resources
+C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Release\net5.0\PersonDirectory.csproj.GenerateResource.cache

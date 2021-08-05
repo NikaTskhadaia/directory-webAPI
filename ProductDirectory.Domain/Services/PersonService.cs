@@ -16,51 +16,5 @@ namespace PersonDirectory.Domain.Services
         {
             _unitOfWork = unitOfWork;
         }
-
-        #region CRUD
-        public PersonModel GetPerson(int personId)
-        {
-            var p = _unitOfWork.People.GetPerson(personId);
-            return p;
-        }
-
-        public void AddPerson(PersonModel person)
-        {
-            _unitOfWork.People.AddPerson(person);
-            _unitOfWork.Save();
-        }
-
-        public void ChangePerson(PersonModel person)
-        {
-            _unitOfWork.People.ChangePerson(person);
-            _unitOfWork.Save();
-        }
-
-        public void RemovePerson(int personId)
-        {
-            _unitOfWork.People.RemovePerson(personId);
-            _unitOfWork.Save();
-        }
-
-
-        public void AddRelatedPerson(int personId, int relatedPersonId, RelationType relationType)
-        {
-            _unitOfWork.People.AddRelatedPerson(personId, relatedPersonId, relationType);
-            _unitOfWork.Save();
-        }
-
-        public void RemoveRelatedPerson(int personId, int relatedPersonId)
-        {
-            _unitOfWork.People.RemoveRelatedPerson(personId, relatedPersonId);
-            _unitOfWork.Save();
-        }
-
-
-        public int CountRelatedPeople(int personId, RelationType relation)
-        {
-            var count = _unitOfWork.People.RelatedPersonCount(personId, relation);
-            return count;
-        }
-        #endregion
     }
 }

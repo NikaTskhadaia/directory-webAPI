@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Localization.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using PersonDirectory.ActionFilters;
 using PersonDirectory.CustomExceptionMiddleware;
@@ -14,6 +17,8 @@ using PersonDirectory.Domain.Models;
 using PersonDirectory.Persistence;
 using PersonDirectory.Persistence.Data;
 using PersonDirectory.Persistence.Repository;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace PersonDirectory
 {
@@ -29,6 +34,20 @@ namespace PersonDirectory
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.Configure<RequestLocalizationOptions>(
+                options =>
+                {
+                    var supportedCultures = new List<CultureInfo>
+                    {
+                        new CultureInfo("en"),
+                        new CultureInfo("ge")
+                    };
+                    options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
+                    options.SupportedCultures = supportedCultures;
+                    options.SupportedUICultures = supportedCultures;
+                });
+            services.AddAutoMapper(typeof(Startup), typeof(PersonRepository));
             services.AddControllers();
             services.AddDbContext<PeopleDb>(options => options.UseSqlServer(
                     Configuration.GetConnectionString("Desktop")));
@@ -52,6 +71,10 @@ namespace PersonDirectory
             }
 
             app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseRequestLocalization(
+                app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value
+                );
 
             app.UseHttpsRedirection();
 

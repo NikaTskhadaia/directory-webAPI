@@ -156,3 +156,7 @@ C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Debug\net5.0\ref\Perso
 C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Debug\net5.0\PersonDirectory.pdb
 C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Debug\net5.0\PersonDirectory.genruntimeconfig.cache
 C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\bin\Debug\net5.0\System.Text.Json.dll
+C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Debug\net5.0\PersonDirectory.Resources.Controllers.PersonController.resources
+C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\obj\Debug\net5.0\PersonDirectory.csproj.GenerateResource.cache
+C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\Nika\Desktop\DirectoryWebApi\PersonDirectory\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

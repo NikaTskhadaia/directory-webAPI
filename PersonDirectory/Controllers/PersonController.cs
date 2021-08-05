@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using PersonDirectory.ActionFilters;
 using PersonDirectory.Domain.Interfaces;
@@ -19,18 +20,20 @@ namespace PersonDirectory.Controllers
 
         private readonly ILogger<PersonModel> _logger;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IStringLocalizer<PersonController> _localizer;
 
         public PersonController(ILogger<PersonModel> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _localizer = localizer;
         }
 
 
         [HttpGet("GetPerson")]
         public ObjectResult GetPerson(int personId)
         {
-            var p = _unitOfWork.People.GetPerson(personId);
+            var p = _unitOfWork.People.Get(personId);
             return Ok(p);
         }
 
@@ -39,7 +42,7 @@ namespace PersonDirectory.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public void AddPerson([FromBody] PersonModel person)
         {
-            _unitOfWork.People.AddPerson(person);
+            _unitOfWork.People.Add(person);
             _unitOfWork.Save();
         }
 
@@ -47,14 +50,14 @@ namespace PersonDirectory.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public void ChangePerson([FromBody] PersonModel person)
         {
-            _unitOfWork.People.ChangePerson(person);
+            _unitOfWork.People.Update(person);
             _unitOfWork.Save();
         }
 
         [HttpDelete("RemovePerson")]
         public void RemovePerson(int personId)
         {
-            _unitOfWork.People.RemovePerson(personId);
+            _unitOfWork.People.Remove(personId);
             _unitOfWork.Save();
         }
 
@@ -96,7 +99,7 @@ namespace PersonDirectory.Controllers
         [HttpGet("GetPeopleByIdOrName")]
         public IEnumerable<PersonModel> GetPeopleByIdOrName(string searchCrieteria, int numberOfObjectsPerPage, int pageNumber)
         {            
-            return _unitOfWork.People.GetPeopleByIdOrName(searchCrieteria, numberOfObjectsPerPage, pageNumber); ;
+            return _unitOfWork.People.GetAll(searchCrieteria, numberOfObjectsPerPage, pageNumber); ;
         }
 
         [HttpGet("GetPeopleByAny{numberOfObjectsPerPage},{pageNumber}")]
