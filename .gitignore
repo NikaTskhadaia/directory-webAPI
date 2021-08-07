@@ -1,5 +1,3 @@
-.suo
-
 PersonDirectory.Domain/bin/
 PersonDirectory.Domain/obj/
 
@@ -8,3 +6,5 @@ PersonDirectory.Persistence/obj/
 
 PersonDirectoryWebAPI/bin/
 PersonDirectoryWebAPI/obj/
+
+PersonDirectoryWebAPI/.vs/
