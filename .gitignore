@@ -1,0 +1,8 @@
+PersonDirectory.Domain/bin/
+PersonDirectory.Domain/obj/
+
+PersonDirectory.Persistence/bin/
+PersonDirectory.Persistence/obj/
+
+PersonDirectoryWebAPI/bin/
+PersonDirectoryWebAPI/obj/
